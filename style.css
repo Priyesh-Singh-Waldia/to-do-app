@@ -15,6 +15,10 @@
   font-family: "Dekko", cursive;
 }
 
+body {
+  overflow-y: scroll; /*fix the layout shift issue caused when tasklist exceeds the screen height*/
+}
+
 .container {
   position: absolute;
   width: 100%;
@@ -84,9 +88,16 @@ header {
   list-style: none;
   cursor: pointer;
   font-size: 20px;
-  padding: 12px 8px 12px 58px;
+  padding: 12px 35px 12px 58px;
   user-select: none;
-  height: 56px; /*to fix line height error when using space as the only task input*/
+  min-height: 56px; /* to fix line height error when using space as the only task input */
+  max-width: 490px;
+  display: flex;
+  word-break: break-word;
+}
+
+i {
+  max-width: 397px;
 }
 
 ul li::before {

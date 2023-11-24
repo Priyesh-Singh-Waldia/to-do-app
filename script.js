@@ -6,9 +6,15 @@ function addTask() {
   if (inputField.value === "") {
     alert("You must write something First!");
   } else {
+    //Create tasks under the task-list
     let li = document.createElement("li");
-    li.innerHTML = inputField.value;
+    let task = document.createElement("i");
+
+    task.innerHTML = inputField.value;
     taskList.appendChild(li);
+    li.appendChild(task);
+
+    // span for removing tasks
     let span = document.createElement("span");
     span.innerHTML = "&#10006";
     li.appendChild(span);
@@ -24,6 +30,11 @@ taskList.addEventListener(
     if (e.target.tagName === "LI") {
       e.target.classList.toggle("checked");
       save();
+    } else if (
+      e.target.tagName === "I" &&
+      e.target.parentElement.tagName === "LI"
+    ) {
+      e.target.parentElement.classList.toggle("checked");
     } else if (e.target.tagName === "SPAN") {
       e.target.parentElement.remove();
       save();
