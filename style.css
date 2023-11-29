@@ -33,7 +33,7 @@ body {
 
 .todo_app {
   background-color: var(--white);
-  min-width: 510px;
+  width: 510px;
   margin: 80px 20px;
   padding: 50px 30px 30px;
   border-radius: 12px;
