@@ -10,9 +10,14 @@ function addTask() {
     let li = document.createElement("li");
     let task = document.createElement("i");
 
+    li.classList.add("tasks");
+
     task.innerHTML = inputField.value;
     taskList.appendChild(li);
     li.appendChild(task);
+
+    // Make the created <li> element draggable
+    li.draggable = true;
 
     // span for removing tasks
     let span = document.createElement("span");
@@ -20,10 +25,71 @@ function addTask() {
     li.appendChild(span);
   }
   inputField.value = "";
+
   save();
 }
 
-//toggle task compleet and delete function
+// Event delegation: Attaching the event listeners to a parent element
+document.addEventListener("dragstart", function (e) {
+  if (e.target.classList.contains("tasks")) {
+    e.target.classList.add("dragging");
+  }
+});
+
+//function to remove the dragging class after dragend
+document.addEventListener("dragend", function (e) {
+  if (e.target.classList.contains("tasks")) {
+    e.target.classList.remove("dragging");
+  }
+});
+
+//sorting list
+
+// Event delegation: Attaching the event listeners to a parent element
+document.addEventListener("dragstart", function (e) {
+  if (e.target.classList.contains("tasks")) {
+    e.target.classList.add("dragging");
+  }
+});
+
+document.addEventListener("dragend", function (e) {
+  if (e.target.classList.contains("tasks")) {
+    e.target.classList.remove("dragging");
+  }
+});
+
+function initSortableList() {
+  taskList.addEventListener("dragover", function (e) {
+    e.preventDefault();
+
+    // Find the dragging item
+    const draggingItem = document.querySelector(".dragging");
+    if (!draggingItem) return;
+
+    // Find the item over which the user is hovering
+    const hoveredItem = e.target.closest(".tasks");
+    if (!hoveredItem) return;
+
+    // Prevent sorting if dragging over itself
+    if (hoveredItem === draggingItem) return;
+
+    // Calculate the position of the cursor relative to the hovered item
+    const bounding = hoveredItem.getBoundingClientRect();
+    const offset = e.clientY - bounding.top;
+
+    // Determine the position to insert the dragging item
+    const next =
+      offset > bounding.height / 2 ? hoveredItem.nextSibling : hoveredItem;
+
+    // Reorder the task list by moving the dragging item before or after the hovered item
+    taskList.insertBefore(draggingItem, next);
+  });
+}
+
+// Call initSortableList to initialize sortable list functionality
+initSortableList();
+
+//toggle task complete and delete function
 taskList.addEventListener(
   "click",
   function (e) {

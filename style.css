@@ -5,7 +5,7 @@
   --grey: #a8a8a8;
   --blue: #0f6bff;
   --red: #ff5151;
-  --hover: #edeef0;
+  --hover: #e9eaeb;
 }
 
 * {
@@ -17,12 +17,6 @@
 
 body {
   overflow-y: scroll; /*fix the layout shift issue caused when tasklist exceeds the screen height*/
-}
-
-.container {
-  position: absolute;
-  width: 100%;
-  min-width: 376px;
   min-height: 100svh;
   background: linear-gradient(
     135deg,
@@ -31,12 +25,16 @@ body {
   );
 }
 
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .todo_app {
   background-color: var(--white);
-  width: 100%;
-  min-width: 376px;
-  max-width: 550px;
-  margin: 80px auto;
+  min-width: 510px;
+  margin: 80px 20px;
   padding: 50px 30px 30px;
   border-radius: 12px;
 }
@@ -68,6 +66,7 @@ header {
   border: none;
   outline: none;
   flex: 1;
+  min-width: 100px;
   height: 30px;
   font-size: 18px;
   background-color: var(--white);
@@ -90,15 +89,15 @@ header {
   cursor: pointer;
   font-size: 20px;
   padding: 12px 35px 12px 58px;
-  user-select: none;
+  /* user-select: none; */
   min-height: 56px; /* to fix line height error when using space as the only task input */
-  max-width: 490px;
+  max-width: 490px; /*🔨 fix this*/
   display: flex;
   word-break: break-word;
 }
 
 i {
-  max-width: 397px;
+  max-width: 389px;
 }
 
 ul li::before {
@@ -125,7 +124,7 @@ ul li.checked::before {
 
 ul li span {
   position: absolute;
-  right: 0;
+  right: 8px;
   color: var(--red);
   height: 32.8px;
   width: 32.8px;
@@ -139,8 +138,22 @@ ul li span:hover {
   background-color: var(--red);
 }
 
+ul li {
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+ul li:hover {
+  background-color: var(--hover);
+}
+
 @media only screen and (max-width: 600px) {
   .todo_app {
-    max-width: 200px;
+    min-width: 300px;
+    margin: 40px 20px;
+  }
+
+  h1 {
+    line-height: 1;
   }
 }
