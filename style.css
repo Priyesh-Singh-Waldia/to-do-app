@@ -88,7 +88,7 @@ header {
   list-style: none;
   cursor: pointer;
   font-size: 20px;
-  padding: 12px 35px 12px 58px;
+  padding: 12px 48px;
   /* user-select: none; */
   min-height: 56px; /* to fix line height error when using space as the only task input */
   max-width: 490px; /*🔨 fix this*/
@@ -143,7 +143,8 @@ ul li {
   margin-bottom: 8px;
 }
 
-ul li:hover {
+ul li:hover,
+.hold {
   background-color: var(--hover);
 }
 
