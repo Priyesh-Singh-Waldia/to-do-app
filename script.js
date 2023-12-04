@@ -86,6 +86,48 @@ function initSortableList() {
   });
 }
 
+taskList.addEventListener("touchstart", touchStart, { passive: false });
+taskList.addEventListener("touchmove", touchMove, { passive: false });
+
+let touchStartY = null;
+let draggingItem = null;
+
+function touchStart(e) {
+  touchStartY = e.touches[0].clientY;
+  draggingItem = e.target.closest(".tasks");
+  draggingItem.classList.add("hold");
+}
+
+function touchMove(e) {
+  if (!touchStartY || !draggingItem) return;
+
+  const touchCurrentY = e.touches[0].clientY;
+  const difference = touchCurrentY - touchStartY;
+
+  const siblings = [...taskList.querySelectorAll(".tasks:not(.dragging)")];
+  const targetIndex =
+    siblings.indexOf(draggingItem) + (difference > 0 ? 1 : -1);
+
+  if (targetIndex >= 0 && targetIndex < siblings.length) {
+    const nextSibling = siblings[targetIndex];
+    const bounding = nextSibling.getBoundingClientRect();
+    const offset = touchCurrentY - bounding.top;
+
+    if (offset > bounding.height / 2) {
+      taskList.insertBefore(draggingItem, nextSibling.nextSibling);
+    } else {
+      taskList.insertBefore(draggingItem, nextSibling);
+    }
+  }
+  touchStartY = touchCurrentY;
+}
+
+taskList.addEventListener("touchend", () => {
+  draggingItem.classList.remove("hold");
+  touchStartY = null;
+  draggingItem = null;
+});
+
 // Call initSortableList to initialize sortable list functionality
 initSortableList();
 
